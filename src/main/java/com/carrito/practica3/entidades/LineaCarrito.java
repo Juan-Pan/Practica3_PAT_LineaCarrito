@@ -6,16 +6,21 @@ import jakarta.persistence.*;
 public class LineaCarrito {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    public Long id;
 
     @ManyToOne
     @JoinColumn(name = "id_carrito", nullable = false)
     public Carrito carrito;
 
+    @Column(nullable = false, unique = true)
+    public Long idProducto;
+
     @Column(nullable = false)
     public Double precioUnitario;
+
     @Column(nullable = false)
     public Integer numeroUnidades;
+
     @Column(nullable = false)
     public Double CosteLinea;
 

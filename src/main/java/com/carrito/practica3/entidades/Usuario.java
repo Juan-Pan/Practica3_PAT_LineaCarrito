@@ -6,9 +6,13 @@ import jakarta.persistence.*;
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    public Long id;
+
     @Column
     public String correo_usuario;
+
+    @Column
+    public String credendenciales;
 
 
 }

@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 public class Carrito {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    public Long id;
     // Iria aca los campos de idUsuario y de Correo prefiero hacerlos en una entidad aparte
     @ManyToOne
     @JoinColumn(name = "usuario_id", nullable = false)
