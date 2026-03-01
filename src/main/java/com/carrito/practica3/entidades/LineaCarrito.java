@@ -24,5 +24,25 @@ public class LineaCarrito {
     @Column(nullable = false)
     public Double costeLinea;
 
+    public void setCarrito(Carrito carrito){
+        this.carrito = carrito;
+    }
+    public void setIdArticulo(Long idArticulo)
+    {
+        this.idArticulo = idArticulo;
+    }
+    public void setPrecioUnitario(Double precioUnitario)
+    {
+        this.precioUnitario = precioUnitario;
+    }
+    public void setNumeroUnidades(Integer numeroUnidades)
+    {
+        this.numeroUnidades = numeroUnidades;
+    }
+    public void setCosteLinea(Double costeLinea)
+    {
+        this.costeLinea = costeLinea;
+    }
+
 
 }

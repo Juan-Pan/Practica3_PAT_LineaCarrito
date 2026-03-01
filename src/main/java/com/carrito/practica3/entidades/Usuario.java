@@ -14,5 +14,7 @@ public class Usuario {
     @Column
     public String credenciales;
 
-
+    public void setCorreoUsuario(String correoUsuario) {
+        this.correoUsuario = correoUsuario;
+    }
 }

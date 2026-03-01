@@ -37,6 +37,7 @@ public class ServicioLineaCarritos {
         LineaCarrito lineaCarritoNuevo = new LineaCarrito();
 
         lineaCarritoNuevo.carrito = encontrarCarrito;
+
         lineaCarritoNuevo.idArticulo =  lineaCarrito.idArticulo;
         lineaCarritoNuevo.numeroUnidades = lineaCarrito.numeroUnidades;
         lineaCarritoNuevo.precioUnitario = lineaCarrito.precioUnitario;
@@ -46,7 +47,7 @@ public class ServicioLineaCarritos {
         lineaCarritoNuevo.costeLinea = lineaCarrito.numeroUnidades *  lineaCarrito.precioUnitario ;
 
         // se suma el coste final al carrito
-        encontrarCarrito.precioFinal = encontrarCarrito.precioFinal +  lineaCarrito.costeLinea;
+        encontrarCarrito.precioFinal = encontrarCarrito.precioFinal +  lineaCarritoNuevo.costeLinea;
 
         // Actualizamos el carrito guardandolo
         carritoRepo.save(encontrarCarrito);
