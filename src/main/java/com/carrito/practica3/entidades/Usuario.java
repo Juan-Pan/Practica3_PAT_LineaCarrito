@@ -9,10 +9,10 @@ public class Usuario {
     public Long id;
 
     @Column
-    public String correo_usuario;
+    public String correoUsuario;
 
     @Column
-    public String credendenciales;
+    public String credenciales;
 
 
 }

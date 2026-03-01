@@ -13,7 +13,7 @@ public class LineaCarrito {
     public Carrito carrito;
 
     @Column(nullable = false, unique = true)
-    public Long idProducto;
+    public Long idArticulo;
 
     @Column(nullable = false)
     public Double precioUnitario;
@@ -22,7 +22,7 @@ public class LineaCarrito {
     public Integer numeroUnidades;
 
     @Column(nullable = false)
-    public Double CosteLinea;
+    public Double costeLinea;
 
 
 }

@@ -14,8 +14,7 @@ public class Carrito {
 
     @Column(nullable = false)
     public String descripcion;
-    @Column(nullable = false)
-    public Integer numeroUnidades;
+
     @Column(nullable = false)
     public Double precioFinal;
 }
