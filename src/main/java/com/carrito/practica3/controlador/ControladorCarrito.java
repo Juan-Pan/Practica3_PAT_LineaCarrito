@@ -12,10 +12,18 @@ public class ControladorCarrito {
     @Autowired
     private ServicioCarritos servicioCarritos;
 
+    //ENDPOINT POST
    @PostMapping("/usuario/{idUsuario}")
    public Carrito crearCarrito(@RequestBody Carrito carritoNuevo, @PathVariable Long idUsuario)
    {
        return servicioCarritos.crearCarrito(carritoNuevo, idUsuario);
+   }
+
+   //ENDPOINT GET
+   @GetMapping("/{idCarrito}")
+    public Carrito buscarCarrito(@PathVariable Long idCarrito)
+   {
+       return servicioCarritos.buscarCarrito(idCarrito);
    }
 
 

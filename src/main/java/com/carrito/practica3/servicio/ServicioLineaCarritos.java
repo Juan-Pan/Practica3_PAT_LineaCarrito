@@ -38,6 +38,7 @@ public class ServicioLineaCarritos {
 
         lineaCarritoNuevo.carrito = encontrarCarrito;
 
+
         lineaCarritoNuevo.idArticulo =  lineaCarrito.idArticulo;
         lineaCarritoNuevo.numeroUnidades = lineaCarrito.numeroUnidades;
         lineaCarritoNuevo.precioUnitario = lineaCarrito.precioUnitario;
@@ -55,5 +56,15 @@ public class ServicioLineaCarritos {
         // Se guarda la linea del carrito
         return carritoRepoLinea.save(lineaCarritoNuevo);
 
+    }
+
+    //Metodo buscar
+    public LineaCarrito buscarLineaCarrito(Long idLineaCarrito){
+        logger.info("Buscando la linea carrito con el id: " + idLineaCarrito);
+        LineaCarrito lineaCarritoBuscado = carritoRepoLinea.findById(idLineaCarrito).orElse(null);
+        if(lineaCarritoBuscado == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Linea carrito no encontrado");
+        }
+        return lineaCarritoBuscado;
     }
 }

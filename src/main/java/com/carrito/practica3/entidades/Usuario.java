@@ -1,5 +1,6 @@
 package com.carrito.practica3.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -11,10 +12,9 @@ public class Usuario {
     @Column
     public String correoUsuario;
 
+    @JsonIgnore
     @Column
     public String credenciales;
 
-    public void setCorreoUsuario(String correoUsuario) {
-        this.correoUsuario = correoUsuario;
-    }
+
 }
