@@ -26,17 +26,22 @@ public class ControladorLineaCarrito {
     //ENDPOINT GET
     @GetMapping("/{idLinea}")
     @ResponseStatus(HttpStatus.OK)
-    public LineaCarrito buscar(@PathVariable Long idLinea)
-    {
+    public LineaCarrito buscar(@PathVariable Long idLinea) {
         return servicioLineaCarritos.buscarLineaCarrito(idLinea);
     }
 
     //ENDPOINT PUT
     @PutMapping("/{idLinea}")
     @ResponseStatus(HttpStatus.OK)
-    public LineaCarrito actualizar(@PathVariable Long idLinea, @RequestBody LineaCarrito lineaCarritoActualizada)
-    {
+    public LineaCarrito actualizar(@PathVariable Long idLinea, @RequestBody LineaCarrito lineaCarritoActualizada) {
         return servicioLineaCarritos.actualizarLineaCarrito(idLinea, lineaCarritoActualizada);
+    }
+
+    //ENDPOINT DELETE
+    @DeleteMapping("/{idLinea}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void borrarLinea(@PathVariable Long idLinea) {
+        servicioLineaCarritos.borrarLineaCarrito(idLinea);
     }
 
 }

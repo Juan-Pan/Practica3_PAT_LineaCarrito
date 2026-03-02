@@ -100,4 +100,17 @@ public class ServicioLineaCarritos {
         return carritoRepoLinea.save(lineaCarritoEncontrada);
 
     }
+
+    @Transactional
+    public void borrarLineaCarrito(Long idLineaCarrito) {
+        LineaCarrito lineaCarritoBorrada = buscarLineaCarrito(idLineaCarrito);
+
+        Carrito carritoPadre = lineaCarritoBorrada.carrito;
+
+        carritoPadre.precioFinal = carritoPadre.precioFinal - lineaCarritoBorrada.costeLinea;
+        carritoRepo.save(carritoPadre);
+
+        carritoRepoLinea.delete(lineaCarritoBorrada);
+    }
+
 }

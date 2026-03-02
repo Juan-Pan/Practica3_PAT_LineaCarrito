@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface RepoLineaCarrito extends CrudRepository<LineaCarrito, Long> {
     List<LineaCarrito> findByCarrito(Carrito carrito);
+
 }

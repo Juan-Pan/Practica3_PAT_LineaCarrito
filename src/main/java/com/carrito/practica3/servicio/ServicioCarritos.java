@@ -1,6 +1,7 @@
 package com.carrito.practica3.servicio;
 
 import com.carrito.practica3.entidades.Carrito;
+import com.carrito.practica3.entidades.LineaCarrito;
 import com.carrito.practica3.entidades.Usuario;
 import com.carrito.practica3.repositorios.RepoCarrito;
 import com.carrito.practica3.repositorios.RepoLineaCarrito;
@@ -12,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 @Service
 public class ServicioCarritos {
@@ -25,16 +28,16 @@ public class ServicioCarritos {
     RepoUsuario repoUsuario;
 
     private Logger logger = LoggerFactory.getLogger(getClass());
+    @Autowired
+    private ServicioLineaCarritos servicioLineaCarritos;
 
     @Transactional
-    public Carrito crearCarrito(Carrito carrito, Long idUsuario)
-    {
+    public Carrito crearCarrito(Carrito carrito, Long idUsuario) {
         logger.info("Intentando crear un carrito para el usuario " + idUsuario);
 
         Usuario usuarioEncontrado = repoUsuario.findById(idUsuario).orElse(null);
 
-        if(usuarioEncontrado == null)
-        {
+        if (usuarioEncontrado == null) {
             logger.error("No existe el usuario con el id: " + idUsuario);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "El usuario no existe");
         }
@@ -42,7 +45,7 @@ public class ServicioCarritos {
 
         Carrito carritoNuevo = new Carrito();
 
-        carritoNuevo.usuario =  usuarioEncontrado;
+        carritoNuevo.usuario = usuarioEncontrado;
         carritoNuevo.descripcion = carrito.descripcion;
         carritoNuevo.precioFinal = 0.0;
 
@@ -51,23 +54,38 @@ public class ServicioCarritos {
         return carritoGuardado;
     }
 
-    public Carrito buscarCarrito(Long idCarrito)
-    {
+    @Transactional
+    public Carrito buscarCarrito(Long idCarrito) {
         Carrito carrito = repoCarrito.findById(idCarrito).orElse(null);
-        if (carrito == null)
-        {
+        if (carrito == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Carrito no encontrado");
         }
         return carrito;
     }
 
-    public Carrito actualizarCarrito(Carrito carrito, Long idCarrito)
-    {
+    @Transactional
+    public Carrito actualizarCarrito(Carrito carrito, Long idCarrito) {
         Carrito carritoEncontrado = buscarCarrito(idCarrito);
 
         carritoEncontrado.descripcion = carrito.descripcion;
 
         return repoCarrito.save(carritoEncontrado);
+    }
+
+    @Transactional
+    public void borrarCarrito(Long idCarrito) {
+        Carrito carritoABorrar = buscarCarrito(idCarrito);
+
+        if (carritoABorrar != null) {
+            List<LineaCarrito> lineasTotales = (List<LineaCarrito>) repoLineaCarrito.findAll();
+
+            for (LineaCarrito linea : lineasTotales) {
+                if (linea.carrito.id.equals(carritoABorrar.id)) {
+                    repoLineaCarrito.delete(linea);
+                }
+            }
+        }
+        repoCarrito.delete(carritoABorrar);
     }
 }
 
