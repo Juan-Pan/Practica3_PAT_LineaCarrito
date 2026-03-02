@@ -26,11 +26,11 @@ public class ServicioLineaCarritos {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Transactional
-    public LineaCarrito crearLineaCarrito(LineaCarrito lineaCarrito, Long idCarrito){
+    public LineaCarrito crearLineaCarrito(LineaCarrito lineaCarrito, Long idCarrito) {
 
         Carrito encontrarCarrito = carritoRepo.findById(idCarrito).orElse(null);
 
-        if(encontrarCarrito == null) {
+        if (encontrarCarrito == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Carrito no encontrado");
         }
 
@@ -39,16 +39,16 @@ public class ServicioLineaCarritos {
         lineaCarritoNuevo.carrito = encontrarCarrito;
 
 
-        lineaCarritoNuevo.idArticulo =  lineaCarrito.idArticulo;
+        lineaCarritoNuevo.idArticulo = lineaCarrito.idArticulo;
         lineaCarritoNuevo.numeroUnidades = lineaCarrito.numeroUnidades;
         lineaCarritoNuevo.precioUnitario = lineaCarrito.precioUnitario;
 
         //se calcula el coste real de precio unitario * numero de unidades
 
-        lineaCarritoNuevo.costeLinea = lineaCarrito.numeroUnidades *  lineaCarrito.precioUnitario ;
+        lineaCarritoNuevo.costeLinea = lineaCarrito.numeroUnidades * lineaCarrito.precioUnitario;
 
         // se suma el coste final al carrito
-        encontrarCarrito.precioFinal = encontrarCarrito.precioFinal +  lineaCarritoNuevo.costeLinea;
+        encontrarCarrito.precioFinal = encontrarCarrito.precioFinal + lineaCarritoNuevo.costeLinea;
 
         // Actualizamos el carrito guardandolo
         carritoRepo.save(encontrarCarrito);
@@ -59,12 +59,45 @@ public class ServicioLineaCarritos {
     }
 
     //Metodo buscar
-    public LineaCarrito buscarLineaCarrito(Long idLineaCarrito){
+    @Transactional
+    public LineaCarrito buscarLineaCarrito(Long idLineaCarrito) {
         logger.info("Buscando la linea carrito con el id: " + idLineaCarrito);
         LineaCarrito lineaCarritoBuscado = carritoRepoLinea.findById(idLineaCarrito).orElse(null);
-        if(lineaCarritoBuscado == null) {
+        if (lineaCarritoBuscado == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Linea carrito no encontrado");
         }
         return lineaCarritoBuscado;
+    }
+
+    //Metodo actualizar
+    @Transactional
+    public LineaCarrito actualizarLineaCarrito(Long idLineaCarrito, LineaCarrito lineaCarritoActualizado) {
+
+
+        LineaCarrito lineaCarritoEncontrada = buscarLineaCarrito(idLineaCarrito);
+
+        //Valor viejo de la linea
+        double valorViejo = lineaCarritoEncontrada.costeLinea;
+
+        if (lineaCarritoActualizado.idArticulo != null) {
+            lineaCarritoEncontrada.idArticulo = lineaCarritoActualizado.idArticulo;
+        }
+        if (lineaCarritoActualizado.numeroUnidades != null) {
+            lineaCarritoEncontrada.numeroUnidades = lineaCarritoActualizado.numeroUnidades;
+        }
+        if (lineaCarritoActualizado.precioUnitario != null) {
+            lineaCarritoEncontrada.precioUnitario = lineaCarritoActualizado.precioUnitario;
+        }
+        lineaCarritoEncontrada.costeLinea = lineaCarritoEncontrada.numeroUnidades * lineaCarritoEncontrada.precioUnitario;
+
+        Double diferenciaPrecio = lineaCarritoEncontrada.costeLinea - valorViejo;
+        Carrito carrito = lineaCarritoEncontrada.carrito;
+
+        carrito.precioFinal = diferenciaPrecio + carrito.precioFinal;
+
+        carritoRepo.save(carrito);
+
+        return carritoRepoLinea.save(lineaCarritoEncontrada);
+
     }
 }

@@ -60,5 +60,14 @@ public class ServicioCarritos {
         }
         return carrito;
     }
+
+    public Carrito actualizarCarrito(Carrito carrito, Long idCarrito)
+    {
+        Carrito carritoEncontrado = buscarCarrito(idCarrito);
+
+        carritoEncontrado.descripcion = carrito.descripcion;
+
+        return repoCarrito.save(carritoEncontrado);
+    }
 }
 

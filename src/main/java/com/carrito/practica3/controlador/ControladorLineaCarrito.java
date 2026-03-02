@@ -24,11 +24,19 @@ public class ControladorLineaCarrito {
     }
 
     //ENDPOINT GET
-    @GetMapping("/{idCarrito}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public LineaCarrito buscar(@PathVariable Long idCarrito)
+    @GetMapping("/{idLinea}")
+    @ResponseStatus(HttpStatus.OK)
+    public LineaCarrito buscar(@PathVariable Long idLinea)
     {
-        return servicioLineaCarritos.buscarLineaCarrito(idCarrito);
+        return servicioLineaCarritos.buscarLineaCarrito(idLinea);
+    }
+
+    //ENDPOINT PUT
+    @PutMapping("/{idLinea}")
+    @ResponseStatus(HttpStatus.OK)
+    public LineaCarrito actualizar(@PathVariable Long idLinea, @RequestBody LineaCarrito lineaCarritoActualizada)
+    {
+        return servicioLineaCarritos.actualizarLineaCarrito(idLinea, lineaCarritoActualizada);
     }
 
 }

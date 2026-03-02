@@ -26,5 +26,12 @@ public class ControladorCarrito {
        return servicioCarritos.buscarCarrito(idCarrito);
    }
 
+   //ENDPOINT PUT
+
+    @PutMapping("/{idCarrito}")
+    public Carrito actualizarCarrito(@PathVariable Long idCarrito, @RequestBody Carrito carritoActualizado )
+    {
+        return servicioCarritos.actualizarCarrito(carritoActualizado, idCarrito);
+    }
 
 }
