@@ -100,7 +100,7 @@ public class ServicioLineaCarritos {
         return carritoRepoLinea.save(lineaCarritoEncontrada);
 
     }
-
+    //metodo borrar
     @Transactional
     public void borrarLineaCarrito(Long idLineaCarrito) {
         LineaCarrito lineaCarritoBorrada = buscarLineaCarrito(idLineaCarrito);
