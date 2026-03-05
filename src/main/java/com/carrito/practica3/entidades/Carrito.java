@@ -18,15 +18,7 @@ public class Carrito {
     @Column(nullable = false)
     public Double precioFinal;
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-    public void setPrecioFinal(Double precioFinal) {
-        this.precioFinal = precioFinal;
-    }
+
 
 
 }
